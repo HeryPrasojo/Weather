@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Weather.Data.Model
 {
@@ -6,13 +6,13 @@ namespace Weather.Data.Model
     {
         public string Location { get; set; }
 
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
 
         public string Wind { get; set; }
 
         public string Visibility { get; set; }
 
-        public string SkyConditions { get; set; }
+        public IEnumerable<string> SkyConditions { get; set; }
 
         public string Temperature { get; set; }
 

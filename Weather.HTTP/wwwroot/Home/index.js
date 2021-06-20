@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         weatherDewPointValue.innerText = responsePayload.dewPoint;
                         weatherPressureValue.innerText = responsePayload.pressure;
                         weatherRelativeHumidityValue.innerText = responsePayload.relativeHumidity;
-                        weatherSkyConditionsValue.innerText = responsePayload.skyConditions;
+                        weatherSkyConditionsValue.innerHTML = "<div>" + responsePayload.skyConditions.join('</div><div>') + "</div>";
                         weatherTemperatureValue.innerText = responsePayload.temperature;
                         weatherVisibilityValue.innerText = responsePayload.visibility;
                         weatherWindValue.innerText = responsePayload.wind;

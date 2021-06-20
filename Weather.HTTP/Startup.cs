@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Weather.HTTP
 {
@@ -28,7 +29,13 @@ namespace Weather.HTTP
             services.AddScoped<Data.Access.Cities.Get.IGetCities, Data.Access.Cities.Get.Mock>();
             services.AddScoped<Services.Cities.Get.IGetCities, Services.Cities.Get.GetCities>();
 
-            services.AddScoped<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.Mock>();
+            // switch weather source
+            //services.AddScoped<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.Mock>();
+            services.AddHttpClient<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.OpenWeatherMaps.OpenWeatherMap>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/weather");
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+            });
             services.AddScoped<Services.Weathers.Get.IGetWeather, Services.Weathers.Get.GetWeather>();
         }
 
