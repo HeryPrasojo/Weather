@@ -29,13 +29,22 @@ namespace Weather.HTTP
             services.AddScoped<Data.Access.Cities.Get.IGetCities, Data.Access.Cities.Get.Mock>();
             services.AddScoped<Services.Cities.Get.IGetCities, Services.Cities.Get.GetCities>();
 
-            // switch weather source
-            //services.AddScoped<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.Mock>();
-            services.AddHttpClient<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.OpenWeatherMaps.OpenWeatherMap>(httpClient =>
+
+            // switch weather data source
+            var weatherDataSource = Environment.GetEnvironmentVariable("WEATHER_DATA_SOURCE");
+            if(weatherDataSource== "OpenWeatherMap")
             {
-                httpClient.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/weather");
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
-            });
+                services.AddHttpClient<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.OpenWeatherMaps.OpenWeatherMap>(httpClient =>
+                {
+                    httpClient.BaseAddress = new Uri("https://api.openweathermap.org/data/2.5/weather");
+                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json");
+                });
+            }
+            else
+            {
+                services.AddScoped<Data.Access.Weathers.Get.IGetWeather, Data.Access.Weathers.Get.Mock>();
+            }
+
             services.AddScoped<Services.Weathers.Get.IGetWeather, Services.Weathers.Get.GetWeather>();
         }
 

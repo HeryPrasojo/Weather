@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
+// move to services?
 namespace Weather.Data.Access.Weathers.Get.OpenWeatherMaps
 {
     public class OpenWeatherMap : IGetWeather
