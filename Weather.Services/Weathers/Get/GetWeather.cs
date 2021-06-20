@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Weather.Services.Weathers.Get
 {
